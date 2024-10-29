@@ -1,17 +1,13 @@
 import { readFile } from "fs";
 import { FinancialOperation } from "src/financial/FinancialOperation";
 import fs from "fs/promises";
-import csv from 'csvtojson'
+import * as csv from 'csvtojson';
+import { Readable } from "stream";
 
 
 export default class FileService {
     async readFinalcialOps(file: any): Promise<FinancialOperation[]> {
-        csv()
-            .fromFile(file)
-            .then(function (jsonArrayObj) {
-                return this.buildList(jsonArrayObj);
-            })
-        return
+       return csv().fromStream(Readable.from(file.buffer));
     }
 
     private buildList(jsonArrayObj: any[]) {

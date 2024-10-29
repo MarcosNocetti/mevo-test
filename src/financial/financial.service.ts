@@ -1,12 +1,14 @@
+import { Injectable } from "@nestjs/common";
 import { FinancialRepository } from "./financial.repository";
 import { FinancialOperation } from "./FinancialOperation";
 
+@Injectable()
 export class FinancialService{
     constructor(private readonly repository: FinancialRepository){}
-
+ 
     async saveFinancialOperation(operation: FinancialOperation): Promise<void>{
        const isSuspicious = this.validateOperation(operation)
-       this.repository.saveFinancialData(operation, isSuspicious)
+       await this.repository.saveFinancialData(operation, isSuspicious)
     }
 
     private validateOperation(operation: FinancialOperation): any{

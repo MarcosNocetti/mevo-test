@@ -19,3 +19,13 @@ export const DbProvider: Provider = {
     provide: 'DbConnectionToken',
     useValue: pgp(config),
 };
+
+DbProvider.useValue.query(migrationFile)
+    .then(() => {
+        console.log('DDL Migration finished!')
+    })
+    .catch((error) => {
+        console.log('Error on DDL migration: ', error)
+        process.exit(1)
+})
+

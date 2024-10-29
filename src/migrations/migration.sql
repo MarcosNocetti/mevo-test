@@ -5,9 +5,8 @@ CREATE TABLE IF NOT EXISTS operations (
     sender VARCHAR(255),
     receiver VARCHAR(255),
     amount VARCHAR(255),
-    suspicious BOOLEAN,
+    suspicious BOOLEAN DEFAULT false,
     reason VARCHAR(255)
-
 );
 
 

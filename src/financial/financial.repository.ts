@@ -13,7 +13,7 @@ interface SaveResult {
 export class FinancialRepository {
     private static readonly UNIQUE_OPERATION_ERROR = "Unique Operation violation"
 
-    constructor(@Inject('DbConnectionToken') private readonly db: pgPromise.IDatabase<{}, pg.IClient>) {}
+    constructor(@Inject('DbConnectionToken') private readonly db: pgPromise.IDatabase<{}, pg.IClient>) { }
 
     async saveFinancialData(
         operations: FinancialOperation[],
@@ -24,12 +24,11 @@ export class FinancialRepository {
         for (const [index, operation] of operations.entries()) {
             const suspicious = suspiciousList[index]
             const saveResult = await this.attemptSaveOperation(operation, suspicious)
-
-            if (saveResult.success) {
-                result.totalInserted++
-            } else {
+            result.totalInserted++
+            if(saveResult.reason){
                 result.failedOperations.push({ operation, reason: saveResult.reason })
             }
+
         }
         result.totalSuccess = result.totalInserted - result.failedOperations.length
         return result
@@ -42,7 +41,7 @@ export class FinancialRepository {
         try {
             await this.insertOperation(operation, suspicious.isSuspicious, suspicious.reason);
             if (suspicious.isSuspicious) {
-                return { success: false, reason: suspicious.reason};
+                return { success: false, reason: suspicious.reason };
             }
             return { success: true };
         } catch (error) {

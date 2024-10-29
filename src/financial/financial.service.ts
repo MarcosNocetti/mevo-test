@@ -15,10 +15,10 @@ export class FinancialService {
     }
 
     private evaluateOperationSuspicion(operation: FinancialOperation): { isSuspicious: boolean, reason?: string } {
-        if (operation.amount > 5000000) {
+        if (parseInt(operation.amount) > 5000000) {
             return { isSuspicious: true, reason: 'Amount above 5000000' }
         }
-        if (operation.amount < 0) {
+        if (parseInt(operation.amount) < 0) {
             return { isSuspicious: true, reason: 'Negative Amount' }
         }
         return { isSuspicious: false }

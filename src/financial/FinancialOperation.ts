@@ -1,5 +1,5 @@
 export class FinancialOperation{
-    from: number
-    to: number
-    amount: number
+    from: string
+    to: string
+    amount: string
 }

@@ -4,9 +4,9 @@ import { FinancialOperation } from './FinancialOperation'
 import { Inject, Injectable } from '@nestjs/common'
 
 interface SaveResult {
-  totalInserted: number;
-  totalSuccess?: number;
-  failedOperations: { operation: FinancialOperation; reason: string }[];
+  totalInserted: number,
+  totalSuccess?: number,
+  failedOperations: { operation: FinancialOperation, reason: string }[]
 }
 
 @Injectable()
@@ -20,7 +20,7 @@ export class FinancialRepository {
 
   async saveFinancialData(
     operations: FinancialOperation[],
-    suspiciousList: { isSuspicious: boolean; reason?: string }[],
+    suspiciousList: { isSuspicious: boolean, reason?: string }[],
   ): Promise<SaveResult> {
     const result: SaveResult = { totalInserted: 0, failedOperations: [] }
 
@@ -38,8 +38,8 @@ export class FinancialRepository {
 
   private async attemptSaveOperation(
     operation: FinancialOperation,
-    suspicious: { isSuspicious: boolean; reason?: string },
-  ): Promise<{ success: boolean; reason?: string }> {
+    suspicious: { isSuspicious: boolean, reason?: string },
+  ): Promise<{ success: boolean, reason?: string }> {
     try {
       await this.insertOperation(
         operation,

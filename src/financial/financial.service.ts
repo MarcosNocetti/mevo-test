@@ -9,8 +9,8 @@ export class FinancialService {
   async saveFinancialOperation(
     operations: FinancialOperation[],
   ): Promise<{
-    totalInserted: number;
-    failedOperations: { operation: FinancialOperation; reason: string }[];
+    totalInserted: number,
+    failedOperations: { operation: FinancialOperation, reason: string }[],
   }> {
     const suspiciousList = operations.map((operation) =>
       this.evaluateOperationSuspicion(operation),
@@ -25,8 +25,8 @@ export class FinancialService {
   }
 
   private evaluateOperationSuspicion(operation: FinancialOperation): {
-    isSuspicious: boolean;
-    reason?: string;
+    isSuspicious: boolean,
+    reason?: string,
   } {
     if (parseInt(operation.amount) > 5000000) {
       return { isSuspicious: true, reason: 'Amount above 5000000' }

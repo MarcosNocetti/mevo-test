@@ -32,8 +32,8 @@ export class FinancialController {
   private async processOperations(
     operations: any[],
   ): Promise<{
-    totalInserted: number;
-    failedOperations: { operation: any; reason: string }[];
+    totalInserted: number,
+    failedOperations: { operation: any, reason: string }[],
   }> {
     try {
       return await this.financialService.saveFinancialOperation(operations)

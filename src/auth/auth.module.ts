@@ -1,17 +1,17 @@
 
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsersModule } from '../user/user.module';
+import { UserModule } from '../user/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
-import { configs } from '../configs';
+import { config } from '../configs';
 
 @Module({
   imports: [
-    UsersModule,
+    UserModule,
     JwtModule.register({
       global: true,
-      secret: configs.secret,
+      secret: config.secret,
       signOptions: { expiresIn: '60s' },
     }),
   ],

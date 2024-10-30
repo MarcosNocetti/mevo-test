@@ -4,13 +4,16 @@ import {
   HttpStatus,
   Post,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import FileService from 'src/file/file.service'
 import { FinancialService } from './financial.service'
+import { AuthGuard } from '@nestjs/passport'
 
 @Controller()
+@UseGuards(AuthGuard('jwt'))
 export class FinancialController {
   constructor(
     private readonly fileService: FileService,

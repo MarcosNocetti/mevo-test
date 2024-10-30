@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   HttpException,
   HttpStatus,
@@ -24,6 +25,9 @@ export class FinancialController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     try {
+      if (!file || file.size === 0) {
+        throw new BadRequestException('file should not be empty');
+      }
       const operations = await this.fileService.readFinalcialOps(file);
       const result = await this.processOperations(operations);
       return result;

@@ -1,5 +1,5 @@
 export class FinancialOperation {
-  from: string
-  to: string
-  amount: string
+  from: string;
+  to: string;
+  amount: string;
 }

@@ -1,9 +1,9 @@
-import { IsNotEmpty } from "class-validator"
+import { IsNotEmpty } from 'class-validator';
 
-export class User{
-    id?: string
-    @IsNotEmpty()
-    name: string
-    @IsNotEmpty()
-    password: string
+export class User {
+  id?: string;
+  @IsNotEmpty()
+  name: string;
+  @IsNotEmpty()
+  password: string;
 }

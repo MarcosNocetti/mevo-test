@@ -1,10 +1,12 @@
-import { FinancialOperation } from 'src/financial/FinancialOperation'
-import * as csv from 'csvtojson'
-import { Readable } from 'stream'
+import { FinancialOperation } from 'src/financial/FinancialOperation';
+import * as csv from 'csvtojson';
+import { Readable } from 'stream';
 
 export default class FileService {
-  async readFinalcialOps(file: Express.Multer.File): Promise<FinancialOperation[]> {
-    return csv().fromStream(Readable.from(file.buffer))
+  async readFinalcialOps(
+    file: Express.Multer.File,
+  ): Promise<FinancialOperation[]> {
+    return csv().fromStream(Readable.from(file.buffer));
   }
 
   private buildList(jsonArrayObj: any[]) {
@@ -13,7 +15,7 @@ export default class FileService {
         from: operation.from,
         to: operation.to,
         amount: operation.amount,
-      }
-    })
+      };
+    });
   }
 }

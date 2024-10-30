@@ -6,11 +6,11 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import FileService from 'src/file/file.service'
-import { FinancialService } from './financial.service'
-import { AuthGuard } from '@nestjs/passport'
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import FileService from 'src/file/file.service';
+import { FinancialService } from './financial.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller()
 @UseGuards(AuthGuard('jwt'))
@@ -24,24 +24,22 @@ export class FinancialController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     try {
-      const operations = await this.fileService.readFinalcialOps(file)
-      const result = await this.processOperations(operations)
-      return result
+      const operations = await this.fileService.readFinalcialOps(file);
+      const result = await this.processOperations(operations);
+      return result;
     } catch (error) {
-      this.handleFileUploadError(error)
+      this.handleFileUploadError(error);
     }
   }
 
-  private async processOperations(
-    operations: any[],
-  ): Promise<{
-    totalInserted: number,
-    failedOperations: { operation: any, reason: string }[],
+  private async processOperations(operations: any[]): Promise<{
+    totalInserted: number;
+    failedOperations: { operation: any; reason: string }[];
   }> {
     try {
-      return await this.financialService.saveFinancialOperation(operations)
+      return await this.financialService.saveFinancialOperation(operations);
     } catch (error) {
-      this.handleOperationError(error)
+      this.handleOperationError(error);
     }
   }
 
@@ -49,13 +47,13 @@ export class FinancialController {
     throw new HttpException(
       `An error occurred during file upload: ${error.message}`,
       HttpStatus.INTERNAL_SERVER_ERROR,
-    )
+    );
   }
 
   private handleOperationError(error: any): never {
     throw new HttpException(
       `Failed to save operation: ${error.message}`,
       HttpStatus.INTERNAL_SERVER_ERROR,
-    )
+    );
   }
 }
